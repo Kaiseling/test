@@ -1,0 +1,20 @@
+# Based on Tyler Bradley and Monica Alexander
+library(tidyverse)
+library(gh)
+
+# Retrieve repository information for RohanAlexander
+repos <- gh("/users/RohanAlexander/repos", per_page = 100)
+
+# Create a tibble with repository information
+repo_info <- tibble(
+  name = map_chr(repos, "name"),
+  created = map_chr(repos, "created_at"),
+  full_name = map_chr(repos, "full_name")
+)
+
+# Filter for the row corresponding to the "heapsofpapers" repository
+heapsofpapers_info <- repo_info %>%
+  filter(name == "heapsofpapers")
+
+# Print the creation date of the "heapsofpapers" repository
+print(heapsofpapers_info$created)
